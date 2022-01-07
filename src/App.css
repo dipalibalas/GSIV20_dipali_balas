@@ -1,0 +1,17 @@
+/*--------ListPage--------*/
+.header {
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid grey;
+}
+
+.search-form {
+  padding: 8px;
+  width: 50%;
+  float: left;
+}
+
+.home-icon {
+  float: right;
+  padding: 8px 12px;
+}
