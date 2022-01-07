@@ -5,12 +5,14 @@ import {
   useHistory,
 } from "react-router-dom";
 import "./App.css";
+import axios from "./axios";
+import request from "./requests";
 import ListPage from "./component/ListPage";
 import DetailPage from "./component/DetailPage";
 
 const AppRoute = () => {
   let routes = useRoutes([
-    { path: "/", element: <ListPage /> },
+    { path: "/", element: <ListPage urlType={request.fetchUpComingMovies} /> },
     { path: "/details", element: <DetailPage /> },
   ]);
   return routes;
