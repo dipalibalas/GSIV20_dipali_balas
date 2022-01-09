@@ -1,22 +1,99 @@
-/*--------ListPage--------*/
-.header {
-  width: 100%;
-  height: 50px;
-  border-bottom: 2px solid grey;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.search-form {
-  padding: 8px;
-  width: 50%;
+.header-container {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: lightgray;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 450px;
+  margin: 5px 20px;
+  padding: 4px;
+  background-color: white;
+  border-radius: 4px;
   float: left;
+}
+
+input {
+  height: 40px;
+  width: 300px;
+  border: none transparent;
+  outline: none;
+  color: black;
+  margin-right: 8px;
+  font-size: 16px;
+  padding: 0px 8px;
+  background-color: white;
 }
 
 .home-icon {
   float: right;
-  padding: 8px 12px;
+  margin-right: 10px;
+}
+
+.movie-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.movie-card {
+  max-width: 250px;
+  overflow: hidden;
+  padding: 15px;
+  box-shadow: 5px 5px 20px #ddd;
+  margin: 10px 0;
+  position: relative;
 }
 
 img {
+  width: 100%;
   height: 300px;
-  width: 150x;
+  display: block;
+  object-fit: contain;
+}
+
+.title-vote {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  width: 50%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-transform: capitalize;
+  color: black;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.vote {
+  margin: 4px;
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-top: 4px 0px 1px 4px;
 }

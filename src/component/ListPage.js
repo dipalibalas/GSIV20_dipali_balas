@@ -1,54 +1,80 @@
 import React, { useState, useEffect } from "react";
 import axios from "../axios";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SearchIcon from "@material-ui/icons/Search";
+import HomeIcon from "@material-ui/icons/Home";
 
-const base_url = "https://image.tmdb.org/t/p/original/";
+import MovieCard from "./MovieCard";
 
-const ListPage = ({ urlType }) => {
-  const [query, setQuery] = useState();
+const APIKEY = "20118efccb52d0b7f949432f9103ae7b";
+
+const ListPage = () => {
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState([0]);
+
+  //fetch movies from api
+  const fetchMovies = async () => {
+    const request = await axios.get(
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${APIKEY}&language=en-US`
+    );
+    //console.log("movies: ", request.data.results);
+    setMovies(request.data.results);
+  };
+
+  //serach movie from api
+  const searchMovie = async (query) => {
+    const request = await axios.get(
+      `https://api.themoviedb.org/3/search/movie?api_key=${APIKEY}&language=en-US&query=${query}&page=1&include_adult=false`
+    );
+    //console.log("searchmovies: ", request.data.results);
+    setMovies(request.data.results);
+  };
 
   useEffect(() => {
-    async function fetchMovies() {
-      const request = await axios.get(urlType);
-      console.log("movies: ", request.data.results);
-      setMovies(request.data.results);
-      return request;
+    if (!query) {
+      fetchMovies();
+    } else {
+      const delayDebounceFn = setTimeout(() => {
+        searchMovie(query);
+      }, 3000);
+
+      return () => clearTimeout(delayDebounceFn);
     }
-    fetchMovies();
-  }, [urlType]);
+  }, [query]);
 
   return (
-    <>
-      <div className="header">
-        <form className="search-form">
+    <div className="cotainer">
+      <div className="header-container">
+        <div className="search-container">
+          <SearchIcon color="action" />
           <input
+            placeholder="search.."
             type="text"
-            name="query"
-            placeholder="Search"
+            autoComplete="off"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button type="submit">Search</button>
-        </form>
-        <div className="home-icon">Home</div>
+        </div>
+        <HomeIcon color="action" className="home-icon" fontSize="medium" />
       </div>
-      <div>
+
+      <div className="movie-container">
+        {/* {
+          <InfiniteScroll
+            dataLength={movies.length}
+            next={() => setPage(page + 1)}
+            hasMore={true}
+          > */}
         {movies
           .sort((a, b) => (a.popularity < b.popularity ? 1 : -1))
           .map((movie) => {
-            return (
-              <div key={movie.id}>
-                <img src={`${base_url}${movie.poster_path}`} alt={movie.name} />
-                <div>
-                  <h3>{movie.title}</h3>
-                  <h4>{movie.vote_average}</h4>
-                </div>
-                <p>{movie.overview}</p>
-              </div>
-            );
+            return <MovieCard movieList={movie} key={movie.id} />;
           })}
+        {/* </InfiniteScroll>
+        } */}
       </div>
-    </>
+    </div>
   );
 };
 

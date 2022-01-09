@@ -12,7 +12,7 @@ import DetailPage from "./component/DetailPage";
 
 const AppRoute = () => {
   let routes = useRoutes([
-    { path: "/", element: <ListPage urlType={request.fetchUpComingMovies} /> },
+    { path: "/", element: <ListPage /> },
     { path: "/details", element: <DetailPage /> },
   ]);
   return routes;
